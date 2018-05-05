@@ -104,7 +104,6 @@ func AvScan(timeout int) Zoner {
 
 	return Zoner{Results: ParseZonerOutput(results, err)}
 }
-log.Debug("AV scan 4")
 // ParseZonerOutput convert zoner output into ResultsData struct
 func ParseZonerOutput(zonerout string, err error) ResultsData {
 
@@ -115,7 +114,6 @@ func ParseZonerOutput(zonerout string, err error) ResultsData {
 	zoner := ResultsData{Infected: false}
 
 	lines := strings.Split(zonerout, "\n")
-log.Debug("AV scan 5")
 	// Extract Virus string
 	for _, line := range lines {
 		if len(line) != 0 {
