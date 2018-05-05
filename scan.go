@@ -74,20 +74,20 @@ func startZavService(ctx context.Context) error {
 
 // AvScan performs antivirus scan
 func AvScan(timeout int) Zoner {
-
+	log.Debug("AV scan 0")
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
 	defer cancel()
-
+	log.Debug("AV scan 1")
 	// start service
 	assert(startZavService(ctx))
-
+	
 	results, err := utils.RunCommand(ctx, "zavcli", path)
 	log.WithFields(log.Fields{
 		"plugin":   name,
 		"category": category,
 		"path":     path,
 	}).Debug("Zoner output: ", results)
-
+	log.Debug("AV scan 2")
 	if err != nil {
 		// Zoner exits with error status 11 if it finds a virus
 		if err.Error() != "exit status 11" {
@@ -99,11 +99,12 @@ func AvScan(timeout int) Zoner {
 		} else {
 			err = nil
 		}
+		log.Debug("AV scan 3")
 	}
 
 	return Zoner{Results: ParseZonerOutput(results, err)}
 }
-
+log.Debug("AV scan 4")
 // ParseZonerOutput convert zoner output into ResultsData struct
 func ParseZonerOutput(zonerout string, err error) ResultsData {
 
@@ -114,7 +115,7 @@ func ParseZonerOutput(zonerout string, err error) ResultsData {
 	zoner := ResultsData{Infected: false}
 
 	lines := strings.Split(zonerout, "\n")
-
+log.Debug("AV scan 5")
 	// Extract Virus string
 	for _, line := range lines {
 		if len(line) != 0 {
