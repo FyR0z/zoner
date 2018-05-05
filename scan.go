@@ -233,7 +233,7 @@ func webAvScan(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	defer os.Remove(tmpfile.Name()) // clean up
-
+	log.Debug("Error 1")
 	data, err := ioutil.ReadAll(file)
 	assert(err)
 
@@ -243,11 +243,11 @@ func webAvScan(w http.ResponseWriter, r *http.Request) {
 	if err = tmpfile.Close(); err != nil {
 		log.Fatal(err)
 	}
-
+	log.Debug("Error 2")
 	// Do AV scan
 	path = tmpfile.Name()
 	zoner := AvScan(60)
-
+	log.Debug("Error 3")
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 
